@@ -19,7 +19,7 @@
 
 section .data
     ; Static data section for storing messages and constants
-    msg1 db "Write an X86/64 ALP to accept five hexadecimal numbers from user and store them in an array and display the accepted numbers.", 10, "Name: Sagar", 10, "Roll no: 7248", 10, "Date: 20/01/2025", 10
+    msg1 db "Write an X86/64 ALP to accept five hexadecimal numbers from user and store them in an array and display the accepted numbers.", 10, "Name: Samir", 10, "Roll no: 7263", 10, "Date: 20/01/2025", 10
     msg1len equ $-msg1  ; Length of msg1
     msg2 db "Enter five 64-bit hexadecimal numbers: ", 10
     msg2len equ $-msg2  ; Length of msg2
