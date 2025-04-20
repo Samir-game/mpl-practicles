@@ -90,32 +90,29 @@ done_succ:
     call Hex_to_Ascii          ; Convert result to ASCII
     ret                        ; Return
 
-Shift_Add:  ; Shift and Add method 
-    xor rbx, rbx               ; Clear BX for result
-    xor rax, rax               ; Clear RAX
-    xor rcx, rcx               ; Clear RCX
-    mov dx, 8                  ; Counter for 8 bits
-    mov al, [num1]             ; Load first number into AL
-    mov bl, [num2]             ; Load second number into BL
+Shift_Add:
+                            ; al=num1 dl=num2 cl=counter bl=result
+    xor bx, bx              ; Clear BX (result)
+    xor cx, cx              ; Clear CX
+    mov cl, 8               ; We will multiply using 8 bits
+    mov al, [num1]          ; Load multiplicand into AL (AX = 0000:AL)
+    mov dl, [num2]          ; Load multiplier into DL (DX = 0000:DL)
 
 shift_loop:
-    test dx, dx                ; Check if counter is zero (8 bits processed)
-    jz done_shift              ; If zero, exit loop
+    test dl, 1              ; Check LSB of multiplier
+    jz skip_add             ; If 0, skip addition
+    add bx, ax              ; If bit is 1, add AX (multiplicand) to BX (result)
 
-    shr bl, 1                  ; Shift BL right by 1 bit (process next bit of second operand)
-    
-    jnc no_add                 ; If no carry (no bit to add), skip addition
-
-    add bx, ax                 ; If carry (bit is 1), add AX (first operand) to BX (accumulate result)
-
-no_add:
-    shl ax, 1                  ; Shift AX left by 1 (next partial product, double the first operand)
-    dec dx                     ; Decrease counter (decrement bit count)
-    jmp shift_loop             ; Repeat loop
+skip_add:
+    shl ax, 1               ; Shift AX left (for next bit of multiplicand)
+    shr dl, 1               ; Shift DL right (to test next bit of multiplier)
+    dec cx                  ; Decrease counter
+    jnz shift_loop          ; Loop until CX = 0
 
 done_shift:
-    call Hex_to_Ascii          ; Convert result to ASCII (display result)
-    ret                        ; Return
+    call Hex_to_Ascii       ; Convert BX (result) to ASCII
+    ret
+
 
 Hex_to_Ascii:  ; Convert hex result to ASCII 
     mov rsi, dispbuff          ; Load display buffer address
