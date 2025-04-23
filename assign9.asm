@@ -48,8 +48,8 @@
 %macro fcreate 1
     mov rax, 2              ; syscall: open (2 is the sys_open syscall number)
     mov rdi, %1             ; filename (pointer to file name)
-    mov rsi, 577o           ; O_WRONLY | O_CREAT | O_TRUNC (577 octal = 0x241 hex)
-    mov rdx, 0777o          ; permissions (0777 octal = 0x1FF hex, full permissions)
+    mov rsi, 42h           ; O_WRONLY | O_CREAT | O_TRUNC (577 octal = 0x241 hex)
+    mov rdx, 7777h         ; permissions (0777 octal = 0x1FF hex, full permissions)
     syscall
 %endmacro
 
