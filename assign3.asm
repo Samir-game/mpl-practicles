@@ -165,8 +165,8 @@ _start:
 
         div ecx                         ;divide by ecx
                                         ;result format:
-                                        ;quotient -> edx
-                                        ;remainder -> eax
+                                        ;quotient -> eax
+                                        ;remainder -> edx
         push rdx                        ;push quotient value to stack
         push rax                        ;push remainder value to stack
         io 1,1,newline,1
